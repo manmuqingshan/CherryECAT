@@ -45,9 +45,6 @@ EC_FAST_CODE_SECTION static void ec_master_send_datagrams(ec_master_t *master, u
     unsigned int datagram_count, more_datagrams_waiting;
     ec_dlist_t sent_datagrams;
 
-#ifdef CONFIG_EC_CAL_TX_TIME
-    uint64_t cycles_start = jiffies;
-#endif
     datagram_count = 0;
     ec_dlist_init(&sent_datagrams);
 
@@ -138,10 +135,6 @@ EC_FAST_CODE_SECTION static void ec_master_send_datagrams(ec_master_t *master, u
             datagram_count++;
         }
     } while (more_datagrams_waiting);
-
-#ifdef CONFIG_EC_CAL_TX_TIME
-    EC_LOG_INFO("Sent %u datagrams in %uus.\n", datagram_count, (unsigned int)(jiffies - cycles_start));
-#endif
 }
 
 EC_FAST_CODE_SECTION void ec_master_receive_datagrams(ec_master_t *master,
